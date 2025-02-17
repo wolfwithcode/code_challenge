@@ -1,0 +1,70 @@
+@baseUrl = http://localhost:3000/v1
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTczOTgxMDMzOSwiZXhwIjoxNzM5ODEyMTM5LCJ0eXBlIjoiQUNDRVNTIn0.Ks7dzuff-UjSgCp1Ed7gC717QIrjwl59vGpAtUGo3DA
+
+# Health Check
+GET {{baseUrl}}/health
+
+### Register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "anh2@test.com",
+  "password": "admin12345"
+}
+
+### Login and paste the access token for the authorization to the token var.
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "anh2@test.com",
+  "password": "admin12345"
+}
+
+### Get a user by ID
+GET {{baseUrl}}/users/1
+Content-Type: application/json
+Authorization: {{token}}
+
+### Create a resource
+POST  {{baseUrl}}/resources
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "Sample Resource 5",
+  "description": "This is a sample resource description",
+  "authorId": 1
+}
+
+### Get resources without filter
+GET {{baseUrl}}/resources?expand=author
+Content-Type: application/json
+
+### Get resources with filter
+GET {{baseUrl}}/resources?sort=-createdAt,name&expand=author&page=1&perPage=1
+Content-Type: application/json
+
+### Get a resource
+GET {{baseUrl}}/resources/1
+Content-Type: application/json
+
+### Get a resource with expand
+GET {{baseUrl}}/resources/1?expand=author
+Content-Type: application/json
+
+### Update a resource
+PATCH  {{baseUrl}}/resources/2
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "Sample Resource 2",
+  "description": "This is the updated resource"
+}
+
+### Delete a resource
+DELETE  {{baseUrl}}/resources/6
+Content-Type: application/json
+Authorization: {{token}}
